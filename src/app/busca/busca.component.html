@@ -1,0 +1,84 @@
+<section class="busca input-container ">
+    <form>
+      <label for="busca">Busque por artistas, albuns ou musicas</label>
+      <input type="text" id="busca" name="busca" type="text" [formControl]="query" autocomplete="off" placeholder="Comece a escrever..."> 
+    </form>
+  </section>
+  <section class="resultado" *ngIf="query" >
+
+    <h2  *ngIf="result?.albums?.items.length > 0" >
+      Resultados encontrados para "{{query.value}}"
+    </h2>
+    <div class="resultado-pesquisa" *ngIf="result.albums && result.albums.items.length > 0">
+        <div class="card" (click)="navegar(item.id)" *ngFor="let item of result.albums.items">
+            
+                <div class="card-imagem">
+                  <img src="{{item.images[0].url}}" alt="">
+                </div>
+                <div class="card-titulo">
+                    {{item.name.toLowerCase()}}
+                </div>
+                <div class="card-artista">
+                  {{item.artists[0].name.toLowerCase()}}
+                </div>
+         
+          </div>
+    </div>
+
+    <h2 *ngIf="result.tracks && result.tracks.items.length > 0">
+      Músicas encontradas para "{{query.value}}"
+    </h2>
+    <div class="resultado-pesquisa" *ngIf="result.tracks && result.tracks.items.length > 0">
+        <div class="card" (click)="navegar(item.id)" *ngFor="let item of result.tracks.items">
+                <div class="card-imagem">
+                  <img src="{{item.album.images[0].url}}" alt="">
+                </div>
+                <div class="card-titulo">
+                    {{item.name.toLowerCase()}}
+                </div>
+                <div class="card-artista">
+                  {{item.artists[0].name.toLowerCase()}}
+                </div>
+          </div>
+    </div>
+
+  </section>
+ 
+
+  <section class="resultado" *ngIf="!query.value || query.value.length < 0" >
+
+    <h2 *ngIf="resultadoUltimaPesquisa.albums.items.length  > 0 ">
+      Álbus buscados recentemente
+    </h2>
+    <div class="resultado-pesquisa" *ngIf="resultadoUltimaPesquisa.albums.items.length > 0">
+        <div class="card"  (click)="navegar(item.id)" *ngFor="let item of resultadoUltimaPesquisa.albums.items">
+                <div class="card-imagem">
+                  <img src="{{item.images[0].url}}" alt="">
+                </div>
+                <div class="card-titulo">
+                    {{item.name.toLowerCase()}}
+                </div>
+                <div class="card-artista">
+                  {{item.artists[0].name.toLowerCase()}}
+                </div>
+          </div>
+    </div>
+
+    <h2 *ngIf="resultadoUltimaPesquisa.tracks.items.length > 0 ">
+      Músicas buscadas recentemente
+    </h2>
+    <div class="resultado-pesquisa" *ngIf="resultadoUltimaPesquisa.tracks.items.length > 0 ">
+        <div class="card"  (click)="navegar(item.id)" *ngFor="let item of resultadoUltimaPesquisa.tracks.items">
+                <div class="card-imagem">
+                  <img src="{{item.album.images[0].url}}" alt="">
+                </div>
+                <div class="card-titulo">
+                    {{item.name.toLowerCase()}}
+                </div>
+                <div class="card-artista">
+                  {{item.artists[0].name.toLowerCase()}}
+                </div>
+          </div>
+    </div>
+
+  </section>

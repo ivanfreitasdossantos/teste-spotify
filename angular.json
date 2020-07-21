@@ -123,6 +123,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "teste-spotify"
+    }
+  },
+  "defaultProject": "teste-spotify",
+  "cli": {
+    "analytics": "ce985f14-f15a-4659-b8df-c64a9e1aaba1"
+  }
 }
