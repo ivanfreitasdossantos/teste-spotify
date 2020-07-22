@@ -6,11 +6,11 @@
   </section>
   <section class="resultado" *ngIf="query" >
 
-    <h2  *ngIf="result?.albums?.items.length > 0" >
+    <div  class="titulo-destaque"  *ngIf="result?.albums?.items.length > 0" >
       Resultados encontrados para "{{query.value}}"
-    </h2>
+    </div>
     <div class="resultado-pesquisa" *ngIf="result.albums && result.albums.items.length > 0">
-        <div class="card" (click)="navegar(item.id)" *ngFor="let item of result.albums.items">
+        <div class="card"  routerLinkActive="active" (click)="navegar(item.id)" *ngFor="let item of result.albums.items">
             
                 <div class="card-imagem">
                   <img src="{{item.images[0].url}}" alt="">
@@ -25,9 +25,9 @@
           </div>
     </div>
 
-    <h2 *ngIf="result.tracks && result.tracks.items.length > 0">
+    <div  class="titulo-destaque" *ngIf="result.tracks && result.tracks.items.length > 0">
       Músicas encontradas para "{{query.value}}"
-    </h2>
+    </div>
     <div class="resultado-pesquisa" *ngIf="result.tracks && result.tracks.items.length > 0">
         <div class="card" (click)="navegar(item.id)" *ngFor="let item of result.tracks.items">
                 <div class="card-imagem">
@@ -47,11 +47,11 @@
 
   <section class="resultado" *ngIf="!query.value || query.value.length < 0" >
 
-    <h2 *ngIf="resultadoUltimaPesquisa.albums.items.length  > 0 ">
+    <div class="titulo-destaque" *ngIf="resultadoUltimaPesquisa.albums.items.length  > 0 ">
       Álbus buscados recentemente
-    </h2>
+    </div>
     <div class="resultado-pesquisa" *ngIf="resultadoUltimaPesquisa.albums.items.length > 0">
-        <div class="card"  (click)="navegar(item.id)" *ngFor="let item of resultadoUltimaPesquisa.albums.items">
+        <div class="card"  routerLinkActive="active" (click)="navegar(item.id)" *ngFor="let item of resultadoUltimaPesquisa.albums.items">
                 <div class="card-imagem">
                   <img src="{{item.images[0].url}}" alt="">
                 </div>
@@ -64,9 +64,9 @@
           </div>
     </div>
 
-    <h2 *ngIf="resultadoUltimaPesquisa.tracks.items.length > 0 ">
+    <div  class="titulo-destaque" *ngIf="resultadoUltimaPesquisa.tracks.items.length > 0 ">
       Músicas buscadas recentemente
-    </h2>
+    </div>
     <div class="resultado-pesquisa" *ngIf="resultadoUltimaPesquisa.tracks.items.length > 0 ">
         <div class="card"  (click)="navegar(item.id)" *ngFor="let item of resultadoUltimaPesquisa.tracks.items">
                 <div class="card-imagem">

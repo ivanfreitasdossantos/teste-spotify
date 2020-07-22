@@ -14,6 +14,7 @@ export class SpotifyService {
   private albumUrl: string;
   private clientId: string = environment.clientId;
   private clientSecret: string = environment.clientSecret;
+  private apiSpotifyURL: string = environment.API_SPOTIFY_URL;
   private body: any;
 
 
@@ -24,8 +25,6 @@ export class SpotifyService {
   getAuth = () => {
 
     let headers =  new HttpHeaders();
-    console.log("cliente id");
-    console.log(this.clientId);
     headers = headers.append('Authorization', 'Basic ' + btoa(this.clientId + ":" + this.clientSecret));
     headers = headers.append('Content-Type', 'application/x-www-form-urlencoded');
 
@@ -42,7 +41,7 @@ export class SpotifyService {
     let headers =  new HttpHeaders();
     headers = headers.append('Authorization', 'Bearer ' + authToken);
 
-    this.searchUrl = 'https://api.spotify.com/v1/search?query=' + query + '&offset=0&limit=20&type=' + type ;
+    this.searchUrl = `${this.apiSpotifyURL}/v1/search?query=${query}&offset=0&limit=20&type=${type}`;
 
     return this._http.get(this.searchUrl, { 'headers': headers })
     .pipe(
@@ -55,7 +54,7 @@ export class SpotifyService {
     let headers =  new HttpHeaders();
     headers.append('Authorization', 'Bearer ' + authToken);
 
-    this.artistUrl = 'https://api.spotify.com/v1/artists/' + id;
+    this.artistUrl = `${this.apiSpotifyURL}/v1/artists/${id}`;
 
     return this._http.get(this.artistUrl, { headers: headers })
     .pipe(
@@ -68,24 +67,23 @@ export class SpotifyService {
     let headers =  new HttpHeaders();
     headers.append('Authorization', 'Bearer ' + authToken);
 
-    this.albumsUrl = 'https://api.spotify.com/v1/artists/' + id + '/albums?market=US&album_type=single';
-
+    this.albumsUrl = `${this.apiSpotifyURL}/v1/artists/${id}/albums?market=US&album_type=single`;
     return this._http.get(this.albumsUrl, { headers: headers })
     .pipe(
       map(res => res)
       );
   }
 
-  // Get Tracks in ablum selected
    getAlbum(id: string, authToken: string) {
     let headers =  new HttpHeaders();
     headers =headers.append('Authorization', 'Bearer ' + authToken);
 
-    this.albumUrl = 'https://api.spotify.com/v1/albums/' + id;
-
-    return this._http.get(this.albumUrl, { headers: headers })
-    .pipe(
-      map(res => res)
-      );
+    this.albumUrl = `${this.apiSpotifyURL}/v1/albums/${id}`;
+    return this._http.get(this.albumUrl, { headers: headers }).pipe(map(res => res));
   }
+
+ /*  getHeaders = () =>{
+    let headers =  new HttpHeaders();
+    return headers =headers.append('Authorization', 'Bearer ' + authToken);
+  } */
 }

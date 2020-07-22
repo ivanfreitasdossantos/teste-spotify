@@ -2,12 +2,14 @@
 
 <div class="app">
 <header class="cabecalho">
-
-  <img width="50px" src="assets/img/logo.png">
+  <div class="logo">
+    <img width="50px" src="assets/img/png-transparent-spotify-computer-icons-streaming-media-music-home-icons-hand-logo-music-download-removebg-preview.png">
+  </div>
+  
 
 </header>
-<main class="conteudo">
-  <router-outlet></router-outlet>
+<main class="conteudo" [@routeAnimation]="getAnimationData(routerOutlet)" >
+  <router-outlet  #routerOutlet="outlet"></router-outlet>
   
 </main>
 <footer  class="rodape">rodape</footer>
