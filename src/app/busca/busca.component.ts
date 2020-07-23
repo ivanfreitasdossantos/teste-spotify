@@ -3,7 +3,7 @@ import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { SpotifyService } from '../services/spotify.services';
 import { FormControl } from '@angular/forms';
 import { LocalStorageService } from '../services/local-storage.service';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-busca',
@@ -12,68 +12,55 @@ import { Router } from '@angular/router';
 })
 export class BuscaComponent implements OnInit {
 
+  token: any ;
   result:any = [];
   searchStr: string;
   resultadoUltimaPesquisa: any = [];
-  resultAlbuns: any;
-  resultMusicas: any;
   query: FormControl = new FormControl();
 
   constructor(
       private _spotifyService: SpotifyService, 
       private _localStorageService: LocalStorageService,
-      private router: Router) { }
+      private _route: ActivatedRoute,
+      private router: Router) { 
+      
+       
+    }
 
   ngOnInit(): void {
 
     this.buscarDadosHistorico();
     this.query.valueChanges.pipe(debounceTime(400),distinctUntilChanged())
-    .subscribe(query => this._spotifyService.getAuth()
-      .subscribe((res:any) => { this._spotifyService.searchMusic(query, 'album,track', res.access_token)
+    .subscribe((query) => {this._spotifyService.searchMusic(query, 'album,track')
         .subscribe(
           (res:any) => {
             this._localStorageService.setData("resultadoUltimaPesquisa",res);   
-            console.log(res)
             this.result  = res;
-            this.resultAlbuns = res.albums.items
-            this.resultMusicas = res.tracks.items
+           
           })
-        }
-      )
-    );
+    });
 
     this.buscarDadosHistorico();
   }
 
-
-  pesquisar(){
-    console.log("pesquisando")
-    this.query.valueChanges.pipe(debounceTime(400),distinctUntilChanged())
-    .subscribe(query => this._spotifyService.getAuth()
-      .subscribe((res:any) => { this._spotifyService.searchMusic(query, 'album,track', res.access_token)
+/*   preecherBusca = () => {
+    console.log("BUSCAR QUERY");
+    this.query.setValue(this._localStorageService.getData("query"))
+    //console.log(this._localStorageService.getData("query"))
+    console.log(this.query.value)
+    this._spotifyService.searchMusic(this.query.value, 'album,track')
         .subscribe(
           (res:any) => {
-            this._localStorageService.setData("resultadoUltimaPesquisa",res);   
-            console.log(res)
             this.result  = res;
-            this.resultAlbuns = res.albums.items
-            this.resultMusicas = res.tracks.items
+           
           })
-        }
-      )
-    );
-  }
+  } */
 
-
-  buscarDadosHistorico(){
+  buscarDadosHistorico = () => {
     this.resultadoUltimaPesquisa = this._localStorageService.getData("resultadoUltimaPesquisa");
-    console.log("LOCAL STORAGE");
-    console.log(this.resultadoUltimaPesquisa);
   }
 
-
-  navegar(id:any){ 
-    console.log("navegar");
+  navegar = (id:any) => { 
     this.router.navigate(["/detalhes/", id ]);
   }
 

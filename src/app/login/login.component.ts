@@ -1,9 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { LoginService } from '../services/login.service';
-import { SpotifyService } from '../services/spotify.services';
-import { FormControl } from '@angular/forms';
-import { Artist } from '../models/Artist';
-import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
+import { ActivatedRoute, Router } from '@angular/router';
+import { LocalStorageService } from '../services/local-storage.service';
 
 @Component({
   selector: 'app-login',
@@ -12,58 +9,33 @@ import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 })
 export class LoginComponent implements OnInit {
 
-  result:any;
-  searchStr: string;
-  results: any;
-  resultsAlbuns: any;
-  resultsMusicas: any;
-  query: FormControl = new FormControl();
+  token: String;
 
-  constructor(private loginService: LoginService, private _spotifyService: SpotifyService) { }
+  constructor(private _localStorageService: LocalStorageService,
+    private _route: ActivatedRoute,
+    private _router: Router) { }
 
   ngOnInit(): void {
-    
-    this.query.valueChanges.pipe(debounceTime(400),distinctUntilChanged())
-      .subscribe(query => this._spotifyService.getAuth()
-        .subscribe((res:any) => { this._spotifyService.searchMusic(query, 'artist,album,track', res.access_token)
-          .subscribe(
-            (res:any) => {   
-              console.log(res)
-              //this.results = res.artists.items
-              this.resultsAlbuns = res.albums.items
-              this.resultsMusicas = res.tracks.items
-            })
-          }
-        )
-      );
+
+    this.getToken();
+
   }
 
-  /* this._spotifyService.searchMusic(query, 'artist', res).subscribe(
-    res => {
-      console.log(res)
-      this.results = res
-    }) */
+  getToken = () => {
+    if ( this._route.snapshot.fragment ) {
+      this.token  = this._route.snapshot.fragment.match(/(?<=access_token=)(.*)(?=&token_type)/s)[0]; 
+      this._localStorageService.setData("token",this.token);
+      this.redirect();
+    }
+  }
+  
+  redirect = () => {
+    this._router.navigateByUrl('/busca');
+  }
+
   logar(){
-
-    this.loginService.autorizar().subscribe((data) => {
-      this.result = data;
-      console.log(data);
-    },
-    (error) => {
-      console.log(error);
-      this.result =[];
-    });
-
-    /* this.query.valueChanges.pipe(
-      debounceTime(400),distinctUntilChanged())
-      .subscribe(query => this._spotifyService.getAuth()
-      .subscribe(res => this._spotifyService.searchMusic(query, 'artist', res).subscribe(
-        res => {
-          console.log(res)
-           // this.results = res
-        })
-      )); */
+    let url = "https://accounts.spotify.com/authorize?client_id=91d1354f118746a4bab53c0e5714c77e&redirect_uri=http:%2F%2flocalhost:4300&scope=user-read-private%20user-read-email&response_type=token&state=123&show_dialog=true";
+    window.location.href = url;
   }
-
 
 }

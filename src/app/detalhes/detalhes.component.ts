@@ -11,7 +11,6 @@ export class DetalhesComponent implements OnInit {
 
   album: any;
   albumId: any;
-  query:any;
 
   constructor( 
     private _spotifyService: SpotifyService,
@@ -23,21 +22,11 @@ export class DetalhesComponent implements OnInit {
   ngOnInit(): void {
 
     this.albumId  = this._route.snapshot.paramMap.get('id')
-    console.log("id album");
-    console.log(this._route.snapshot.paramMap);
-
-
-    this._spotifyService.getAuth()
-      .subscribe((res:any) => { this._spotifyService.getAlbum(this.albumId, res.access_token)
-        .subscribe(
-          (res:any) => {   
-            console.log(res)
+      this._spotifyService.getAlbum(this.albumId)
+        .subscribe((res:any) => {   
             this.album = res
           })
-        }
-    );
   }
-
 
   voltar(){
     this._router.navigate(["busca/"]);

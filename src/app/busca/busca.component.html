@@ -15,17 +15,20 @@
                 <div class="card-imagem">
                   <img src="{{item.images[0].url}}" alt="">
                 </div>
-                <div class="card-titulo">
+                <div class="card-info">
+                   <div class="card-titulo">
                     {{item.name.toLowerCase()}}
-                </div>
-                <div class="card-artista">
-                  {{item.artists[0].name.toLowerCase()}}
-                </div>
+                  </div>
+                  <div class="card-artista">
+                    {{item.artists[0].name.toLowerCase()}}
+                  </div>
+                </div>  
+               
          
           </div>
     </div>
 
-    <div  class="titulo-destaque" *ngIf="result.tracks && result.tracks.items.length > 0">
+   <!--  <div  class="titulo-destaque" *ngIf="result.tracks && result.tracks.items.length > 0">
       Músicas encontradas para "{{query.value}}"
     </div>
     <div class="resultado-pesquisa" *ngIf="result.tracks && result.tracks.items.length > 0">
@@ -40,7 +43,7 @@
                   {{item.artists[0].name.toLowerCase()}}
                 </div>
           </div>
-    </div>
+    </div> -->
 
   </section>
  
@@ -48,23 +51,25 @@
   <section class="resultado" *ngIf="!query.value || query.value.length < 0" >
 
     <div class="titulo-destaque" *ngIf="resultadoUltimaPesquisa.albums.items.length  > 0 ">
-      Álbus buscados recentemente
+      Álbuns buscados recentemente
     </div>
     <div class="resultado-pesquisa" *ngIf="resultadoUltimaPesquisa.albums.items.length > 0">
         <div class="card"  routerLinkActive="active" (click)="navegar(item.id)" *ngFor="let item of resultadoUltimaPesquisa.albums.items">
-                <div class="card-imagem">
-                  <img src="{{item.images[0].url}}" alt="">
-                </div>
+              <div class="card-imagem">
+                <img src="{{item.images[0].url}}" alt="">
+              </div>
+              <div class="card-info">
                 <div class="card-titulo">
-                    {{item.name.toLowerCase()}}
+                  {{item.name.toLowerCase()}}
                 </div>
                 <div class="card-artista">
                   {{item.artists[0].name.toLowerCase()}}
                 </div>
+              </div>  
           </div>
     </div>
 
-    <div  class="titulo-destaque" *ngIf="resultadoUltimaPesquisa.tracks.items.length > 0 ">
+  <!--   <div  class="titulo-destaque" *ngIf="resultadoUltimaPesquisa.tracks.items.length > 0 ">
       Músicas buscadas recentemente
     </div>
     <div class="resultado-pesquisa" *ngIf="resultadoUltimaPesquisa.tracks.items.length > 0 ">
@@ -79,6 +84,6 @@
                   {{item.artists[0].name.toLowerCase()}}
                 </div>
           </div>
-    </div>
+    </div> -->
 
   </section>
