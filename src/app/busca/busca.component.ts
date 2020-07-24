@@ -1,11 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
-import { SpotifyService } from '../services/spotify.services';
+import { SpotifyService } from '../services/spotify.service';
 import { FormControl } from '@angular/forms';
 import { LocalStorageService } from '../services/local-storage.service';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
 import { environment } from '../../environments/environment';
-import { Album } from '../models/Album';
 
 @Component({
   selector: 'app-busca',
@@ -39,7 +38,7 @@ export class BuscaComponent implements OnInit {
             this._localStorageService.setData("resultadoUltimaPesquisa",res);   
             this.result  = res;
           },(error) => {  
-            if( error.status ==  environment.codError401 ){
+            if( error.status ==  "401" ){
               alert("Seu acesso expirou!! Clique em ok e acesse novamente"); 
               this._router.navigate(["/"]);
             }

@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { slideInAnimation } from './animations';
-import { LocalStorageService } from './services/local-storage.service';
-import { SpotifyService } from './services/spotify.services';
+
 
 @Component({
   selector: 'app-root',
@@ -11,7 +10,6 @@ import { SpotifyService } from './services/spotify.services';
   animations: [ slideInAnimation ]
 })
 export class AppComponent   implements OnInit{
-  title = 'teste-spotify';
 
   constructor() { }
 

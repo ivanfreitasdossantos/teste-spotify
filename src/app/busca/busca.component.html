@@ -9,7 +9,7 @@
     <div  class="titulo-destaque"  *ngIf="result?.albums?.items.length > 0" >
       Resultados encontrados para "{{query.value}}"
     </div>
-    <div class="resultado-pesquisa" *ngIf="result.albums && result.albums.items.length > 0">
+    <div class="resultado-pesquisa" *ngIf="result?.albums && result.albums.items.length > 0">
         <div class="card"  routerLinkActive="active" (click)="navegar(item.id)" *ngFor="let item of result.albums.items">
             
                 <div class="card-imagem">
