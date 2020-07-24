@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { SpotifyService } from '../services/spotify.services';
 import { Router, ActivatedRoute } from '@angular/router';
+import { Album } from '../models/Album';
 
 @Component({
   selector: 'app-detalhes',
@@ -9,8 +10,9 @@ import { Router, ActivatedRoute } from '@angular/router';
 })
 export class DetalhesComponent implements OnInit {
 
-  album: any;
-  albumId: any;
+  album: Album;
+  albumId: string;
+  musicaSelecionada: string;
 
   constructor( 
     private _spotifyService: SpotifyService,
@@ -23,13 +25,20 @@ export class DetalhesComponent implements OnInit {
 
     this.albumId  = this._route.snapshot.paramMap.get('id')
       this._spotifyService.getAlbum(this.albumId)
-        .subscribe((res:any) => {   
+        .subscribe((res: Album) => {
             this.album = res
+          },(error) => {
+            alert("Seu acesso expirou!! Clique em ok e acesse novamente"); 
+            this._router.navigate(["/"]);
           })
   }
 
+  selecionarMusica(item){
+    this.musicaSelecionada = item.preview_url; 
+  }
+
   voltar(){
-    this._router.navigate(["busca/"]);
+    this._router.navigate(["albums/"]);
   }
 
 }

@@ -30,11 +30,11 @@ export class LoginComponent implements OnInit {
   }
   
   redirect = () => {
-    this._router.navigateByUrl('/busca');
+    this._router.navigateByUrl('/albums');
   }
 
   logar(){
-    let url = "https://accounts.spotify.com/authorize?client_id=91d1354f118746a4bab53c0e5714c77e&redirect_uri=http:%2F%2flocalhost:4300&scope=user-read-private%20user-read-email&response_type=token&state=123&show_dialog=true";
+    let url = "https://accounts.spotify.com/authorize?client_id=91d1354f118746a4bab53c0e5714c77e&redirect_uri=http:%2F%2flocalhost:4200&scope=user-read-private%20user-read-email&response_type=token&state=123&show_dialog=true";
     window.location.href = url;
   }
 

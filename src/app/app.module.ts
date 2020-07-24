@@ -10,6 +10,9 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DetalhesComponent } from './detalhes/detalhes.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { HeaderComponent } from './shared/header/header.component';
+import { PlayerComponent } from './detalhes/player/player.component';
+
 
 
 @NgModule({
@@ -17,7 +20,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     AppComponent,
     BuscaComponent,
     LoginComponent,
-    DetalhesComponent
+    DetalhesComponent,
+    HeaderComponent,
+    PlayerComponent
   ],
   imports: [
     BrowserModule,
@@ -28,8 +33,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     ReactiveFormsModule,
     RouterModule.forRoot([
       { path: '', component: LoginComponent },
-      { path: 'busca', component: BuscaComponent, data: { animation: 'detalhes' } },
-      { path: 'detalhes/:id', component: DetalhesComponent, data: { animation: 'busca' } }
+      { path: 'albums', component: BuscaComponent, data: { animation: 'album' } },
+      { path: 'album/:id', component: DetalhesComponent, data: { animation: 'albums' } }
     ]),
   ],
   providers: [],

@@ -4,7 +4,7 @@
       <input type="text" id="busca" name="busca" type="text" [formControl]="query" autocomplete="off" placeholder="Comece a escrever..."> 
     </form>
   </section>
-  <section class="resultado" *ngIf="query" >
+  <section class="resultado" *ngIf="query.value" >
 
     <div  class="titulo-destaque"  *ngIf="result?.albums?.items.length > 0" >
       Resultados encontrados para "{{query.value}}"

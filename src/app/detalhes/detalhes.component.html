@@ -1,5 +1,5 @@
-<div (click)="voltar()">
-     < voltar
+<div class="voltar" (click)="voltar()">
+     < Voltar
 </div>
 
 <div class="flex-wrap">
@@ -7,21 +7,34 @@
         <div class="img-principal">
             <img src="{{album?.images[0].url}}" alt="">
         </div>
-        <div class="card-titulo">
-            {{album?.name}}
+        <div class="card-info">
+                <div class="card-titulo">
+                    {{album?.name}}
+                </div>
+                <div class="card-artista">
+                    {{album?.artists[0].name}}
+                </div>
+                
         </div>
-        <div class="card-artista">
-          {{album?.artists[0].name}}
-        </div>
+           
     </div>    
     
     <div class="musica-album">
+      <!--   <div class="player">
+            <audio controls="" autoplay="" name="media" src="{{musicaSelecionada}}"> </audio> 
+        </div> -->
+        <app-player musicaSelecionada="{{musicaSelecionada}}" ></app-player> 
         <div class="lista-musicas"  *ngFor="let item of album?.tracks.items ; let i = index">
-                <div class="nome-musica">
+                <div class="nome-musica" (click)="selecionarMusica(item)">
                     <span class="margem-numero">{{i + 1 }}.</span> 
-                    <span class="fonte-capitalizada">{{item?.name.toLowerCase()}}</span>
+                    <span class="card-titulo">{{item.name.toLowerCase()}}</span>
                 </div>
-                <div class="tempo-musica">{{item?.duration_ms | date: 'mm:ss' }}</div>    
+                <div class="tempo-musica">
+                    {{item.duration_ms | date: 'mm:ss' }}
+                </div>
+                 
         </div>
     </div>    
 </div>
+
+  

@@ -4,6 +4,8 @@ import { SpotifyService } from '../services/spotify.services';
 import { FormControl } from '@angular/forms';
 import { LocalStorageService } from '../services/local-storage.service';
 import { Router, ActivatedRoute } from '@angular/router';
+import { environment } from '../../environments/environment';
+import { Album } from '../models/Album';
 
 @Component({
   selector: 'app-busca',
@@ -13,7 +15,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 export class BuscaComponent implements OnInit {
 
   token: any ;
-  result:any = [];
+  result: Response;
   searchStr: string;
   resultadoUltimaPesquisa: any = [];
   query: FormControl = new FormControl();
@@ -21,8 +23,7 @@ export class BuscaComponent implements OnInit {
   constructor(
       private _spotifyService: SpotifyService, 
       private _localStorageService: LocalStorageService,
-      private _route: ActivatedRoute,
-      private router: Router) { 
+      private _router: Router) { 
       
        
     }
@@ -31,37 +32,31 @@ export class BuscaComponent implements OnInit {
 
     this.buscarDadosHistorico();
     this.query.valueChanges.pipe(debounceTime(400),distinctUntilChanged())
-    .subscribe((query) => {this._spotifyService.searchMusic(query, 'album,track')
+    .subscribe((query) => {
+      this._spotifyService.searchMusic(query, 'album,track')
         .subscribe(
-          (res:any) => {
+          (res: Response) => {
             this._localStorageService.setData("resultadoUltimaPesquisa",res);   
             this.result  = res;
-           
+          },(error) => {  
+            if( error.status ==  environment.codError401 ){
+              alert("Seu acesso expirou!! Clique em ok e acesse novamente"); 
+              this._router.navigate(["/"]);
+            }
+            
           })
     });
 
     this.buscarDadosHistorico();
   }
 
-/*   preecherBusca = () => {
-    console.log("BUSCAR QUERY");
-    this.query.setValue(this._localStorageService.getData("query"))
-    //console.log(this._localStorageService.getData("query"))
-    console.log(this.query.value)
-    this._spotifyService.searchMusic(this.query.value, 'album,track')
-        .subscribe(
-          (res:any) => {
-            this.result  = res;
-           
-          })
-  } */
 
   buscarDadosHistorico = () => {
     this.resultadoUltimaPesquisa = this._localStorageService.getData("resultadoUltimaPesquisa");
   }
 
-  navegar = (id:any) => { 
-    this.router.navigate(["/detalhes/", id ]);
+  navegar = (id:any) => {
+    this._router.navigate(["/album/", id ]);
   }
 
 }

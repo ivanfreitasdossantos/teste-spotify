@@ -1,16 +1,8 @@
-
-
 <div class="app">
-<header class="cabecalho">
-  <div class="logo">
-    <img width="50px" src="assets/img/logo.png">
-  </div>
-  
 
-</header>
+<app-header></app-header>
+
 <main class="conteudo" [@routeAnimation]="getAnimationData(routerOutlet)" >
   <router-outlet  #routerOutlet="outlet"></router-outlet>
-  
 </main>
-<footer  class="rodape">rodape</footer>
 </div>

@@ -13,30 +13,11 @@ export class SpotifyService {
   private artistUrl: string;
   private albumsUrl: string;
   private albumUrl: string;
-  private clientId: string = environment.clientId;
-  private clientSecret: string = environment.clientSecret;
   private apiSpotifyURL: string = environment.API_SPOTIFY_URL;
-  private body: any;
 
 
   constructor(private _http: HttpClient,
               private _localStorageService: LocalStorageService) { }
-
-
-
-/*   getAuth = () => {
-
-    let headers =  new HttpHeaders();
-    headers = headers.append('Authorization', 'Basic ' + btoa(this.clientId + ":" + this.clientSecret));
-    headers = headers.append('Content-Type', 'application/x-www-form-urlencoded');
-
-    let params: URLSearchParams = new URLSearchParams();
-    params.set('grant_type', 'client_credentials');
-    let body = params.toString();
-
-    return this._http.post('https://accounts.spotify.com/api/token', body, {headers: headers});
-
-  } */
 
 
   searchMusic = (query: string, type = 'artist,album,track') => {
