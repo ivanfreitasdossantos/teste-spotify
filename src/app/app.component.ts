@@ -11,6 +11,8 @@ import { slideInAnimation } from './animations';
 })
 export class AppComponent   implements OnInit{
 
+  title = "teste-spotify";
+
   constructor() { }
 
   ngOnInit(): void {

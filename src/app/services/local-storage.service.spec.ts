@@ -13,4 +13,12 @@ describe('LocalStorageService', () => {
   it('should be created', () => {
     expect(service).toBeTruthy();
   });
+
+  it(' Pode guardar dados no LocalStorage', () => {
+    const dado = "string teste"
+    service.setData("teste","string teste");
+    expect(service.getData("teste")).toBe("string teste");
+  });
+
+
 });
